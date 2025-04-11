@@ -17,7 +17,7 @@ interface Repo  {
     fun getUserDataById(userId: String) : Flow<ResultState<UserDataParent>>
     fun updateUserData(userDataParent: UserDataParent) : Flow<ResultState<String>>
     fun userProfileImage(uri: Uri) : Flow<ResultState<String>>
-    fun getCategoriesInLimited(categoryName : String): Flow<ResultState<List<ProductDataModel>>>
+    fun getCategoriesInLimited(): Flow<ResultState<List<CategoryDataModel>>>
     fun getProductsInLimited(): Flow<ResultState<List<ProductDataModel>>>
     fun getAllProducts(): Flow<ResultState<List<ProductDataModel>>>
     fun getProductById(productId: String): Flow<ResultState<ProductDataModel>>
@@ -27,7 +27,7 @@ interface Repo  {
     fun getCart(): Flow<ResultState<List<CartDataModel>>>
     fun getAllCategories(): Flow<ResultState<List<CategoryDataModel>>>
     fun getCheckout(productId: String):Flow<ResultState<ProductDataModel>>
-    fun getBanner():Flow<ResultState<List<BannerDataModel>>>
+    fun getBanners():Flow<ResultState<List<BannerDataModel>>>
     fun getSpecificCategoryItem(categoryName: String): Flow<ResultState<List<ProductDataModel>>>
     fun getAllSuggestedProducts(): Flow<ResultState<List<ProductDataModel>>>
 }

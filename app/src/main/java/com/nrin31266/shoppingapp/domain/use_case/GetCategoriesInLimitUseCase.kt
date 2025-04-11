@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetCategoriesInLimitUseCase @Inject constructor(private val repo: Repo) {
-    fun getCategoriesInLimited(categoryName: String) : Flow<ResultState<List<ProductDataModel>>>{
-        return repo.getCategoriesInLimited(categoryName)
+    fun getCategoriesInLimited() : Flow<ResultState<List<CategoryDataModel>>>{
+        return repo.getCategoriesInLimited()
     }
 
 }
