@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class GetSpecificCategoryItemsUseCase @Inject constructor(private val repo: Repo) {
     fun getSpecificCategoryItems(categoryName : String) : Flow<ResultState<List<ProductDataModel>>>{
-        return repo.getCategoriesInLimited(categoryName)
+        return repo.getSpecificCategoryItem(categoryName)
     }
 
 }

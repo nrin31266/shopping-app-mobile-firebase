@@ -112,6 +112,8 @@ dependencies {
     // custom bottom nav bar
     implementation("com.canopas.compose-animated-navigationbar:bottombar:1.0.2")
 
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.5.0")
 //    // this is for payment gateway
 //    implementation("com.razorpay:checkout:1.6.40")
 

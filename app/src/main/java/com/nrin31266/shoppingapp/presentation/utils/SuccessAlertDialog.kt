@@ -35,7 +35,8 @@ import com.nrin31266.shoppingapp.R
 @Preview(showSystemUi = true)
 fun SuccessAlertDialog (
     onClick : ()->Unit = {},
-
+    desc : String = "Congratulation, you have completed your registration!",
+    buttonText : String = "Go to home"
 ){
     BasicAlertDialog (
         onDismissRequest = {},
@@ -63,7 +64,7 @@ fun SuccessAlertDialog (
                 Spacer(Modifier.height(16.dp))
                 Text("Success", fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.height(16.dp))
-                Text("Congratulation, you have \n completed your registration!"
+                Text(desc
                 , textAlign = TextAlign.Center, fontSize = 16.sp)
                 Spacer(Modifier.height(24.dp))
                 Button(
@@ -73,7 +74,7 @@ fun SuccessAlertDialog (
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.elegant_gold))
                 ) {
                     Text(
-                        text = "Go to home",
+                        text = buttonText,
                         fontSize = 20.sp
                     )
                 }
