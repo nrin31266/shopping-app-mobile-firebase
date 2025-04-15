@@ -4,6 +4,7 @@ package com.nrin31266.shoppingapp.presentation.viewmodel
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.nrin31266.shoppingapp.common.HomeScreenState
 import com.nrin31266.shoppingapp.common.ResultState
 import com.nrin31266.shoppingapp.domain.model.CartDataModel
@@ -39,7 +40,8 @@ class ShoppingAppViewmodel @Inject constructor(
     private val getCheckoutUseCase: GetCheckoutUseCase,
     private val getBannersUseCase: GetBannersUseCase,
     private val getSpecificCategoryItemsUseCase: GetSpecificCategoryItemsUseCase,
-    private val getAllSuggestedProductUseCase: GetAllSuggestedProductUseCase
+    private val getAllSuggestedProductUseCase: GetAllSuggestedProductUseCase,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
     private val _profileScreenState = MutableStateFlow(ProfileScreenState())
@@ -97,7 +99,15 @@ class ShoppingAppViewmodel @Inject constructor(
 
 
     init {
+        loadUserData()
         loadHomeScreenData()
+
+    }
+
+    private fun loadUserData() {
+        firebaseAuth.currentUser?.uid?.let {
+            getUserDataById(it)
+        }
     }
 
     private fun loadHomeScreenData() {

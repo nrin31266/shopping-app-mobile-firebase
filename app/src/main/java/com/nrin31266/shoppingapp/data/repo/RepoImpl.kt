@@ -1,6 +1,8 @@
 package com.nrin31266.shoppingapp.data.repo
 
+import android.content.ContentValues.TAG
 import android.net.Uri
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
@@ -88,6 +90,7 @@ class RepoImpl @Inject constructor(
         emit(ResultState.Loading)
         try{
             firestore.collection(USER_COLLECTION).document(userDataParent.nodeId).update(userDataParent.userData.toMap()).await()
+            Log.d(TAG, "updateUserData: $userDataParent")
             emit(ResultState.Success("User data updated successfully"))
         }catch (e: Exception){
             emit(ResultState.Error(e.localizedMessage ?: "Unknown error"))
@@ -103,6 +106,7 @@ class RepoImpl @Inject constructor(
             val storageRef = storage.reference.child("profile_images/${currentUser.uid}" + "_" + UUID.randomUUID())
             val uploadTask = storageRef.putFile(uri).await()
             val downloadUrl = uploadTask.storage.downloadUrl.await()
+
             emit(ResultState.Success(downloadUrl.toString()))
         } catch (e: Exception) {
             emit(ResultState.Error(e.localizedMessage ?: "Failed to upload image"))

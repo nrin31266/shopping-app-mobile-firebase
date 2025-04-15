@@ -9,6 +9,8 @@ plugins {
     //
     id("org.jetbrains.kotlin.plugin.serialization") version "2.1.20"
     alias(libs.plugins.google.gms.google.services)
+
+
 }
 
 android {
@@ -23,6 +25,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+
     }
 
     buildTypes {
@@ -32,6 +36,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            debug {
+
+            }
         }
     }
     compileOptions {
@@ -44,8 +51,10 @@ android {
     buildFeatures {
         compose = true
     }
+
     buildToolsVersion = "35.0.0"
 }
+
 
 dependencies {
 

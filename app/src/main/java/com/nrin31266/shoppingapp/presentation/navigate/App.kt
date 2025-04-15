@@ -47,6 +47,7 @@ import com.nrin31266.shoppingapp.presentation.LoginScreen
 import com.nrin31266.shoppingapp.presentation.SignupScreen
 import com.nrin31266.shoppingapp.presentation.screen.AllFavScreen
 import com.nrin31266.shoppingapp.presentation.screen.CartScreen
+import com.nrin31266.shoppingapp.presentation.screen.CheckoutScreen
 import com.nrin31266.shoppingapp.presentation.screen.HomeScreen
 import com.nrin31266.shoppingapp.presentation.screen.ProductDetailsScreen
 import com.nrin31266.shoppingapp.presentation.screen.ProductsInCategoryScreen
@@ -195,7 +196,7 @@ fun App(
                     composable(Routers.CheckoutScreen.route,
                         arguments = listOf(navArgument("productId") { type = NavType.StringType })) {
                         val productId = it.arguments?.getString("productId") ?: ""
-                        ProductDetailsScreen(navController = navController, productId = productId)
+                        CheckoutScreen(navController = navController, productId = productId)
                     }
 
 

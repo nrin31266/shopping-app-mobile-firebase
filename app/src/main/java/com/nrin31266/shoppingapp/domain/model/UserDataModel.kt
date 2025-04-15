@@ -6,7 +6,7 @@ data class UserDataModel(
     val fullName: String = "",
     val email: String = "",
     val password: String = "",
-
+    val phoneNumber: String = "",
     val profileImage: String = "",
 
 
@@ -16,7 +16,8 @@ data class UserDataModel(
             "fullName" to fullName,
             "email" to email,
             "password" to password,
-            "profileImage" to profileImage
+            "profileImage" to profileImage,
+            "phoneNumber" to phoneNumber
         )
 
     }
