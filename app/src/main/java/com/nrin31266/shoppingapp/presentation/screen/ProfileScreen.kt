@@ -77,9 +77,9 @@ fun ProfileScreen(
     navController: NavController,
     firebaseAuth: FirebaseAuth
 ) {
-//    LaunchedEffect(key1 = Unit) {
-//        viewModel.getUserDataById(firebaseAuth.currentUser?.uid!!)
-//    }
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getUserDataById(firebaseAuth.currentUser?.uid!!)
+    }
 
     val profileScreenState = viewModel.profileScreenState.collectAsStateWithLifecycle()
     val updateScreenState = viewModel.updateScreenState.collectAsStateWithLifecycle()
@@ -242,7 +242,7 @@ fun ProfileScreen(
                     OutlinedTextField(
                         value = phoneNumber.value,
                         onValueChange = { phoneNumber.value = it },
-                        label = { Text("Phone Number") },
+                        label = { Text("Phone") },
                         modifier = Modifier.weight(1f),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Gray,
@@ -280,7 +280,7 @@ fun ProfileScreen(
                         modifier = Modifier.fillMaxWidth(),
                         enabled = !isEditing
                     ) {
-                        Text(if (isEditing) "Saving" else "Edit")
+                        Text(if (isEditing) "Savinggggg" else "Edit")
                     }
 
 

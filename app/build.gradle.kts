@@ -2,13 +2,13 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-
+    alias(libs.plugins.google.gms.google.services)
     //hilt
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     //
     id("org.jetbrains.kotlin.plugin.serialization") version "2.1.20"
-    alias(libs.plugins.google.gms.google.services)
+
 
 
 }
@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId = "com.nrin31266.shoppingapp"
-        minSdk = 35
+        minSdk = 33
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -37,7 +37,9 @@ android {
                 "proguard-rules.pro"
             )
             debug {
-
+                isDebuggable = true
+                // Bật R8 ngay cả ở debug
+                isMinifyEnabled = false
             }
         }
     }
@@ -52,7 +54,6 @@ android {
         compose = true
     }
 
-    buildToolsVersion = "35.0.0"
 }
 
 
@@ -66,12 +67,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.firebase.auth)
+
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
-    implementation(libs.firebase.storage)
-    implementation(libs.firebase.firestore)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,14 +81,19 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+
+
+
     //hilt
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation ("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation ("com.google.dagger:hilt-android:2.50")
     kapt("com.google.dagger:hilt-android-compiler:2.50")
 
-    //image
-    implementation("io.coil-kt:coil-compose:2.3.0")
+
 
     //navigate
     implementation("androidx.navigation:navigation-compose:2.7.1")
@@ -99,12 +104,6 @@ dependencies {
 
 
 
-    // Retrofit (REST API)
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // OkHttp (Log API Requests)
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
 
     // this is for coil
     implementation("io.coil-kt:coil-compose:2.6.0")
@@ -123,8 +122,6 @@ dependencies {
 
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.5.0")
-//    // this is for payment gateway
-//    implementation("com.razorpay:checkout:1.6.40")
 
 
 
