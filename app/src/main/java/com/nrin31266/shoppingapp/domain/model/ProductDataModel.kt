@@ -1,8 +1,6 @@
 package com.nrin31266.shoppingapp.domain.model
 
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class ProductDataModel(
     val name: String = "",
     val image: String = "",

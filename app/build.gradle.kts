@@ -123,6 +123,7 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.5.0")
 
+    implementation("com.google.code.gson:gson:2.10.1")
 
 
 }

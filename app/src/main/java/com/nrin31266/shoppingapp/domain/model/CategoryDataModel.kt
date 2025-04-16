@@ -1,9 +1,11 @@
 package com.nrin31266.shoppingapp.domain.model
 
-data class CategoryDataModel (
+import java.time.LocalDate
+import java.time.LocalDateTime
+
+data class CategoryDataModel(
     val name: String = "",
     val image: String = "",
-    val createdBy: String = "",
-    val date: Long = System.currentTimeMillis()
-
+    val description: String = "",
+    val createdAt: String= ""
 )

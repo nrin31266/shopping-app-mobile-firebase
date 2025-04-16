@@ -9,5 +9,5 @@ data class CartDataModel(
     var cartId: String = "",
     var size: String = "",
     var description : String ="",
-    var category: String
+    var category: String= ""
 )

@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Men's Clothing",
+        "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+        "description": "Stylish and trendy clothes for men.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Women's Clothing",
+        "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
+        "description": "Elegant fashion for women.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Jewelery",
+        "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+        "description": "Premium accessories and jewelry items.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Electronics",
+        "image": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
+        "description": "Latest and innovative electronics.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Shoes",
+        "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+        "description": "Comfortable and stylish footwear.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Bags",
+        "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+        "description": "Trendy bags for all occasions.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Home Appliances",
+        "image": "https://fakestoreapi.com/img/71LHZ6j1LbL._AC_UL640_QL65_ML3_.jpg",
+        "description": "Smart and efficient home appliances.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Books",
+        "image": "https://fakestoreapi.com/img/61Iz2yy2CKL._AC_SY879_.jpg",
+        "description": "Bestselling novels and academic books.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Kids & Toys",
+        "image": "https://fakestoreapi.com/img/71z3kpMAYUL._AC_UL640_QL65_ML3_.jpg",
+        "description": "Fun and safe toys for kids of all ages.",
+        "createdAt": "2025-04-16T00:00:00"
+    },
+    {
+        "name": "Beauty & Health",
+        "image": "https://fakestoreapi.com/img/71YlH-4MUQL._AC_UL640_QL65_ML3_.jpg",
+        "description": "Cosmetics and health care essentials.",
+        "createdAt": "2025-04-16T00:00:00"
+    }
+]

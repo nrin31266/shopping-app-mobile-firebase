@@ -99,7 +99,7 @@ class ShoppingAppViewmodel @Inject constructor(
 
 
     init {
-//        loadUserData()
+        loadUserData()
         loadHomeScreenData()
 
     }

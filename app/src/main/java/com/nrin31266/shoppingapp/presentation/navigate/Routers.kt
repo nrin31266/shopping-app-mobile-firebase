@@ -3,6 +3,7 @@ package com.nrin31266.shoppingapp.presentation.navigate
 import kotlinx.serialization.Serializable
 
 sealed class SubNavigation(val route: String) {
+
     data object LoginSignupScreen : SubNavigation("login_signup")
     data object MainHomeScreen : SubNavigation("main_home")
 }

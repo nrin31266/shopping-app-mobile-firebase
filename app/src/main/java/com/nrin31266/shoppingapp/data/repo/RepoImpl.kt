@@ -162,6 +162,7 @@ class RepoImpl @Inject constructor(
             val snapshot = firestore.collection(PRODUCT_COLLECTION).document(productId).get().await()
             val product = snapshot.toObject(ProductDataModel::class.java)
             product ?: throw Exception("Product not found")
+            emit(ResultState.Success(product))
         }catch (e:Exception){
             emit(ResultState.Error(e.localizedMessage?: "Unknown error"))
         }
@@ -246,7 +247,8 @@ class RepoImpl @Inject constructor(
     override fun getSpecificCategoryItem(categoryName: String): Flow<ResultState<List<ProductDataModel>>> = flow {
         emit(ResultState.Loading)
        try {
-           val snapshot = firestore.collection(PRODUCT_COLLECTION).whereEqualTo("category", categoryName).get().await()
+           val snapshot = firestore.collection(PRODUCT_COLLECTION).whereEqualTo("category",
+               categoryName.lowercase()).get().await()
            val products = snapshot.toObjects(ProductDataModel::class.java)
            emit(ResultState.Success(products))
        }catch (e:Exception){

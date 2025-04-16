@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -53,13 +54,14 @@ fun ProductItem(
         ){
             AsyncImage(
                 model = product.image, contentDescription = "", modifier= Modifier.fillMaxWidth()
-                    .background(color = Color.White).height(200.dp).clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
+                    .background(color = Color.White).height(250.dp).clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
                 contentScale = ContentScale.Crop
             )
             Column (
                 modifier = Modifier.padding(8.dp)
             ){
-                Text(text = product.name, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                Text(text = product.name, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold,
+                    maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Spacer(Modifier.height(8.dp))
                 Row (
 
