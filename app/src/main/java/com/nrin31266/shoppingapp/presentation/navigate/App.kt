@@ -66,6 +66,7 @@ import com.nrin31266.shoppingapp.presentation.screen.ProductsInCategoryScreen
 import com.nrin31266.shoppingapp.presentation.screen.ProductsScreen
 import com.nrin31266.shoppingapp.presentation.screen.ProfileScreen
 
+
 data class BottomNavItem(
     val name: String,
     val route: String,

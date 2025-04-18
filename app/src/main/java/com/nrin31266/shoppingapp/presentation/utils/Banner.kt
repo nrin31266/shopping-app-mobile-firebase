@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect as LaunchedEffect1
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,6 +41,12 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Banner(banners: List<BannerDataModel>) {
+    if (banners.isEmpty()) {
+        // Hiển thị một thông báo hoặc giao diện thay thế nếu danh sách banners trống
+
+        return
+    }
+
     val pagerState = rememberPagerState(pageCount = { banners.size })
     val scope = rememberCoroutineScope()
 
@@ -50,7 +58,6 @@ fun Banner(banners: List<BannerDataModel>) {
                 pagerState.animateScrollToPage(nextPage)
             }
         }
-
     }
 
     Column(
@@ -74,10 +81,8 @@ fun Banner(banners: List<BannerDataModel>) {
                         modifier = Modifier.fillMaxWidth(),
                         contentScale = ContentScale.Crop,
                         alignment = Alignment.Center
-
                     )
                 }
-
             }
         }
         PageIndicator(
@@ -86,8 +91,8 @@ fun Banner(banners: List<BannerDataModel>) {
             modifier = Modifier
         )
     }
-
 }
+
 
 @Composable
 fun SelectedDot(modifier: Modifier) {

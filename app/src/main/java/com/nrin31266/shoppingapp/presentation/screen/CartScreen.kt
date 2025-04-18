@@ -214,14 +214,14 @@ fun CartItemCard(cartData: CartDataModel) {
                 Text(
                     cartData.price,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = colorResource(R.color.purple_700)
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
             Column {
                 Text(
                     "x${cartData.quantity}",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = colorResource(R.color.purple_700)
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 

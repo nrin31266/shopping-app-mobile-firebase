@@ -3,19 +3,30 @@ package com.nrin31266.shoppingapp.presentation.screen
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,8 +35,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,9 +54,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -52,10 +68,14 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.nrin31266.shoppingapp.common.HomeScreenState
+import com.nrin31266.shoppingapp.domain.model.BannerDataModel
 import com.nrin31266.shoppingapp.domain.model.CategoryDataModel
 import com.nrin31266.shoppingapp.domain.model.ProductDataModel
 import com.nrin31266.shoppingapp.presentation.navigate.Routers
+import com.nrin31266.shoppingapp.presentation.utils.Banner
 import com.nrin31266.shoppingapp.presentation.utils.FullScreenLoading
+import com.nrin31266.shoppingapp.presentation.utils.ProductItem
 import com.nrin31266.shoppingapp.presentation.viewmodel.ShoppingAppViewmodel
 
 @Composable
@@ -68,99 +88,194 @@ fun HomeScreen(
         viewModel.getSuggestedProductsState.collectAsStateWithLifecycle()
     val suggestedProducts = getSuggestedProductsState.value.products ?: emptyList()
     val context = LocalContext.current
-    LaunchedEffect(key1 = Unit) {
-        viewModel.getAllSuggestedProducts()
-    }
+//    LaunchedEffect(key1 = suggestedProducts) {
+//        if (suggestedProducts.isEmpty()) {
+//            viewModel.getAllSuggestedProducts()
+//        }
+//    }
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        topBar = {
+            SearchBar()
+        },
+        contentWindowInsets = WindowInsets(0)
     ) { innerPadding ->
         if (state.value.isLoading) {
             FullScreenLoading()
         }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-        ) {
-            if (state.value.errorMessage != null) {
-                Text(
-                    text = state.value.errorMessage.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error
-                )
-            } else {
-                Column(
 
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
+        HomeContent(
+            state = state.value,
+            suggestedProducts = suggestedProducts,
+            navController = navController,
+            innerPadding = innerPadding
+        )
+    }
+}
 
-                    ) {
-                        OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
-                            modifier = Modifier.weight(1f).padding(8.dp),
-                            shape = RoundedCornerShape(8.dp),
-                            placeholder = { Text("Search") },
-                            leadingIcon = { Icon(Icons.Default.Search, "") },
-
-                            )
-                        Spacer(modifier = Modifier.size(8.dp))
-                        IconButton(
-                            onClick = {
-
-                            }
-
-                        ) {
-                            Icon(Icons.Default.Notifications, "",
-                                modifier = Modifier.size(30.dp))
-                        }
-
-                    }
-                    Row (
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp).fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Text(
-                            "Categories",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                        TextButton(
-                            {
-                                navController.navigate(Routers.AllCategoriesScreen.route)
-                            }
-                        ) {
-                            Text(
-                                "See All",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
-                    Row (
-                        modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-
-                    }
-                }
-
-            }
-
+@Composable
+fun SearchBar() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp)
+    ) {
+        OutlinedTextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier.weight(1f),
+            shape = RoundedCornerShape(8.dp),
+            placeholder = { Text(text = "Search...", fontSize = 13.sp) },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+            textStyle = TextStyle(fontSize = 14.sp),
+            singleLine = true
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        IconButton(onClick = {}) {
+            Icon(Icons.Default.Notifications, "", modifier = Modifier.size(30.dp))
         }
+    }
+}
 
+@Composable
+fun HomeContent(
+    state: HomeScreenState,
+    suggestedProducts: List<ProductDataModel>,
+    navController: NavController,
+    innerPadding: PaddingValues
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+            .verticalScroll(rememberScrollState())
+    ) {
+        if (state.errorMessage != null) {
+            Text(
+                text = state.errorMessage.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error
+            )
+        } else {
+            CategorySection(state.categories, navController)
+            Banner(state.banners)
+            FlashSaleSection(state.products, navController)
+            SuggestedProductsSection(suggestedProducts, navController)
+        }
+    }
+}
+
+@Composable
+fun CategorySection(categories: List<CategoryDataModel>, navController: NavController) {
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            "Categories",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        TextButton({ navController.navigate(Routers.AllCategoriesScreen.route) }) {
+            Text(
+                "See All",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(categories) { category ->
+            CategoryItem(category = category) {
+                navController.navigate(Routers.ProductsInCategoryScreen(categoryName = category.name).route)
+            }
+        }
+    }
+}
+
+
+@Composable
+fun FlashSaleSection(products: List<ProductDataModel>, navController: NavController) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            "Flash Sale",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        TextButton({ navController.navigate(Routers.SeeAllProductScreen.route) }) {
+            Text(
+                "See All",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(products) { product ->
+            FlashSale(product = product, navController = navController)
+        }
+    }
+}
+
+@Composable
+fun SuggestedProductsSection(
+    suggestedProducts: List<ProductDataModel>,
+    navController: NavController
+) {
+    // Title and See All button
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            "Suggested for you",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        TextButton({ navController.navigate(Routers.SeeAllProductScreen.route) }) {
+            Text(
+                "See All",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
     }
 
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(suggestedProducts) { product ->
+            FlashSale(product = product, navController = navController)
+        }
+    }
 
 }
+
 
 @Composable
 fun CategoryItem(
@@ -169,36 +284,37 @@ fun CategoryItem(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable {
-            onCategoryClick()
-        }
+        modifier = Modifier
+            .clickable { onCategoryClick() }
+            .padding(2.dp) // thêm tí không gian
     ) {
         Box(
             modifier = Modifier
-                .size(60.dp)
-                .background(Color.LightGray, CircleShape)
+                .size(64.dp)
+                .background(Color.LightGray, CircleShape),
+            contentAlignment = Alignment.Center
         ) {
             AsyncImage(
                 model = category.image,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(63.dp) // nhỏ hơn box để có viền đều
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop
             )
-            Text(
-                text = category.name,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxWidth(),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyMedium
-
-            )
         }
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(
+            text = category.name,
+            modifier = Modifier.widthIn(max = 80.dp), // Giới hạn chiều rộng
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
     }
 }
+
 
 @Composable
 fun FlashSale(
@@ -317,3 +433,23 @@ fun importProductsFromAssets(context: Context) {
             }
     }
 }
+
+fun importBannersFromAssets(context: Context) {
+    val firestore = Firebase.firestore
+    val json = context.assets.open("banners.json").bufferedReader().use { it.readText() }
+
+    val listType = object : TypeToken<List<BannerDataModel>>() {}.type
+    val banners: List<BannerDataModel> = Gson().fromJson(json, listType)
+
+    banners.forEach { banner ->
+        firestore.collection("banners")
+            .add(banner)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Firestore", "Banner added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener {
+                Log.e("Firestore", "Failed to add banner: ${it.message}")
+            }
+    }
+}
+

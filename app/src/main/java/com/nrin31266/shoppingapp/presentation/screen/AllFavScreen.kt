@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -68,7 +69,8 @@ fun AllFavScreen(
                     style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold) }
                 , scrollBehavior = scrollBehavior,
             )
-        }, modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)
+        }, modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+        contentWindowInsets = WindowInsets(0)
     ){innerPadding->
         Column(
             modifier = Modifier.fillMaxSize().padding(innerPadding)

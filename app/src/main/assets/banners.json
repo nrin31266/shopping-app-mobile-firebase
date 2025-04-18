@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Summer Sale",
+    "image": "https://picsum.photos/id/0/367/267",
+    "date": 1713331200000
+  },
+  {
+    "name": "New Arrivals",
+    "image": "https://picsum.photos/id/10/367/267",
+    "date": 1713504000000
+  },
+  {
+    "name": "Flash Deals",
+    "image": "https://picsum.photos/id/20/367/267",
+    "date": 1713590400000
+  },
+  {
+    "name": "Exclusive Offers",
+    "image": "https://picsum.photos/id/16/367/267",
+    "date": 1713676800000
+  },
+  {
+    "name": "Trending Now",
+    "image": "https://picsum.photos/id/26/367/267",
+    "date": 1713763200000
+  }
+]

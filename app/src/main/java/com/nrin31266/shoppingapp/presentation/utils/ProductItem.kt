@@ -54,7 +54,7 @@ fun ProductItem(
         ){
             AsyncImage(
                 model = product.image, contentDescription = "", modifier= Modifier.fillMaxWidth()
-                    .background(color = Color.White).height(250.dp).clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
+                    .background(color = Color.White).height(165.dp).clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)),
                 contentScale = ContentScale.Crop
             )
             Column (

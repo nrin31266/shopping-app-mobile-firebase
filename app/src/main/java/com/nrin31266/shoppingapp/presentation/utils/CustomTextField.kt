@@ -25,7 +25,7 @@ fun CustomTextField (
     leadingIcon: ImageVector? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    fontSize:  TextUnit = 24.sp
+    fontSize:  TextUnit = 16.sp
 
 ){
     OutlinedTextField(

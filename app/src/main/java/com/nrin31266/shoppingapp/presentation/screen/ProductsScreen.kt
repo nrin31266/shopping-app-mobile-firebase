@@ -2,12 +2,14 @@ package com.nrin31266.shoppingapp.presentation.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.OutlinedTextField
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.TopAppBar
@@ -69,51 +71,51 @@ fun ProductsScreen(
                     BackButton(navController)
                 }
             )
-        }
+        },
+        contentWindowInsets = WindowInsets(0)
 
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding).padding(8.dp)
         ) {
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                shape = RoundedCornerShape(8.dp),
                 placeholder = { Text("Search") },
-                modifier = Modifier.fillMaxWidth(),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = null
-                    )
-                }
+                leadingIcon = { Icon(Icons.Default.Search, "") }
             )
-            when{
-                state.value.isLoading->{
+            when {
+                state.value.isLoading -> {
                     FullScreenLoading()
                 }
-                state.value.errorMessage!=null->{
+
+                state.value.errorMessage != null -> {
                     Text(
                         text = state.value.errorMessage.toString(),
                         color = Color.Red,
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
-                products.isEmpty()->{
+
+                products.isEmpty() -> {
                     Text(
                         text = "Empty Products",
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
-                else->{
-                    LazyVerticalGrid (
+
+                else -> {
+                    LazyVerticalGrid(
                         columns = androidx.compose.foundation.lazy.grid.GridCells.Fixed(2),
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(vertical = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ){
-                        items(products){item->
+                    ) {
+                        items(products) { item ->
                             ProductItem(product = item, onProductClick = {
                                 navController.navigate(Routers.EachProductDetailsScreen(productId = item.productId).route)
                             })
